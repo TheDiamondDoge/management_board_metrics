@@ -1,9 +1,13 @@
 package com.aiksanov.metrics.dto;
 
+import java.util.Date;
+
 public class QualityIndicatorsAmountDTO {
     private int quality;
     private int backlog;
     private int defects;
+    private Date updatedOn;
+    private boolean updateInProcess;
 
     public QualityIndicatorsAmountDTO() {
     }
@@ -32,6 +36,24 @@ public class QualityIndicatorsAmountDTO {
 
     public QualityIndicatorsAmountDTO setDefects(int defects) {
         this.defects = defects;
+        return this;
+    }
+
+    public Date getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public QualityIndicatorsAmountDTO setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+        return this;
+    }
+
+    public boolean isUpdateInProcess() {
+        return updateInProcess;
+    }
+
+    public QualityIndicatorsAmountDTO setUpdateInProcess(boolean updateInProcess) {
+        this.updateInProcess = updateInProcess;
         return this;
     }
 }

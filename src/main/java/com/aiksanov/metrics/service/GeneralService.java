@@ -3,6 +3,8 @@ package com.aiksanov.metrics.service;
 import com.aiksanov.metrics.data.Backlog;
 import com.aiksanov.metrics.data.NewOpenDefects;
 import com.aiksanov.metrics.data.Quality;
+import com.aiksanov.metrics.data.QualityIndicatorsInfo;
+import com.aiksanov.metrics.data.repository.QualityIndicatorsInfoRepo;
 import com.aiksanov.metrics.dto.QualityIndicatorsAmountDTO;
 import com.aiksanov.metrics.dto.QualityIndicatorsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,16 @@ public class GeneralService {
     private final BacklogService backlogService;
     private final DefectsService defectsService;
     private final QualityService qualityService;
+    private final QualityIndicatorsInfoRepo indicatorsInfoRepo;
 
     @Autowired
-    public GeneralService(BacklogService backlogService, DefectsService defectsService, QualityService qualityService) {
+    public GeneralService(BacklogService backlogService, DefectsService defectsService, QualityService qualityService,
+                          QualityIndicatorsInfoRepo indicatorsInfoRepo)
+    {
         this.backlogService = backlogService;
         this.defectsService = defectsService;
         this.qualityService = qualityService;
+        this.indicatorsInfoRepo = indicatorsInfoRepo;
     }
 
     public QualityIndicatorsDTO getQualityIndicators(int projectId) {
@@ -37,9 +43,13 @@ public class GeneralService {
         List<Backlog> backlogList = this.backlogService.getBacklogKpiIssues(projectId);
         List<NewOpenDefects> defectsList = this.defectsService.getDefectsKPI(projectId);
         List<Quality> qualityList = this.qualityService.getQualityKPI(projectId);
+        QualityIndicatorsInfo updateInfo = this.indicatorsInfoRepo.findById(projectId)
+                .orElseGet(QualityIndicatorsInfo::new);
         return new QualityIndicatorsAmountDTO()
                 .setBacklog(backlogList.size())
                 .setDefects(defectsList.size())
-                .setQuality(qualityList.size());
+                .setQuality(qualityList.size())
+                .setUpdatedOn(updateInfo.getUpdatedOn())
+                .setUpdateInProcess(updateInfo.isUpdateInProcess());
     }
 }
