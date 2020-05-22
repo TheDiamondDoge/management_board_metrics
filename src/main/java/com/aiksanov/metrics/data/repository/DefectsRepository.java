@@ -15,4 +15,5 @@ public interface DefectsRepository extends CrudRepository<NewOpenDefects, Intege
 
     @Query(nativeQuery = true, value = defectsKpiQuery)
     Optional<List<NewOpenDefects>> getDefectsKpiIssues(int projectId);
+    Optional<List<NewOpenDefects>> findByProjectId(int projectId);
 }

@@ -17,12 +17,11 @@ public class BacklogService {
         this.backlogRepository = backlogRepository;
     }
 
-    public void getAll() {
-        Iterable<Backlog> backlogs = this.backlogRepository.findAll();
-        backlogs.forEach(System.out::println);
+    public List<Backlog> getBacklogKpiIssuesWithoutNone(int projectId) {
+        return this.backlogRepository.getBacklogKpiIssues(projectId).orElseGet(ArrayList::new);
     }
 
-    public List<Backlog> getBacklogKpiIssues(int projectId) {
-        return this.backlogRepository.getBacklogKpiIssues(projectId).orElseGet(ArrayList::new);
+    public List<Backlog> getBacklogKpiIssuesAll(int projectId) {
+        return this.backlogRepository.findByProjectId(projectId).orElseGet(ArrayList::new);
     }
 }

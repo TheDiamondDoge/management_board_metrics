@@ -17,11 +17,6 @@ public class QualityService {
         this.qualityRepository = qualityRepository;
     }
 
-    public void getAll() {
-        Iterable<Quality> qualities = this.qualityRepository.findAll();
-        qualities.forEach(System.out::println);
-    }
-
     public List<Quality> getQualityKPI(int projectId) {
         return this.qualityRepository.getQualityKpiIssues(projectId).orElseGet(ArrayList::new);
     }

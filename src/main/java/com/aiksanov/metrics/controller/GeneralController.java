@@ -27,11 +27,6 @@ public class GeneralController {
         this.chartService = chartService;
     }
 
-    @GetMapping("/qualityIndicators/issues/{projectId}")
-    public QualityIndicatorsDTO getQualityIndicators(@PathVariable int projectId) {
-        return this.generalService.getQualityIndicators(projectId);
-    }
-
     @GetMapping("/qualityIndicators/amount/{projectId}")
     public QualityIndicatorsAmountDTO getQualityIndicatorsAmount(@PathVariable int projectId) {
         LOGGER.info("GET /qualityIndicators/amount/{}", projectId);

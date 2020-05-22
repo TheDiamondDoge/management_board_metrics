@@ -6,7 +6,6 @@ import com.aiksanov.metrics.data.Quality;
 import com.aiksanov.metrics.data.QualityIndicatorsInfo;
 import com.aiksanov.metrics.data.repository.QualityIndicatorsInfoRepo;
 import com.aiksanov.metrics.dto.QualityIndicatorsAmountDTO;
-import com.aiksanov.metrics.dto.QualityIndicatorsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,19 +28,9 @@ public class GeneralService {
         this.indicatorsInfoRepo = indicatorsInfoRepo;
     }
 
-    public QualityIndicatorsDTO getQualityIndicators(int projectId) {
-        List<Backlog> backlogList = this.backlogService.getBacklogKpiIssues(projectId);
-        List<NewOpenDefects> defectsList = this.defectsService.getDefectsKPI(projectId);
-        List<Quality> qualityList = this.qualityService.getQualityKPI(projectId);
-        return new QualityIndicatorsDTO()
-                .setBacklogs(backlogList)
-                .setDefects(defectsList)
-                .setQualities(qualityList);
-    }
-
     public QualityIndicatorsAmountDTO getQualityIndicatorsAmount(int projectId) {
-        List<Backlog> backlogList = this.backlogService.getBacklogKpiIssues(projectId);
-        List<NewOpenDefects> defectsList = this.defectsService.getDefectsKPI(projectId);
+        List<Backlog> backlogList = this.backlogService.getBacklogKpiIssuesWithoutNone(projectId);
+        List<NewOpenDefects> defectsList = this.defectsService.getDefectsKPIWithoutNone(projectId);
         List<Quality> qualityList = this.qualityService.getQualityKPI(projectId);
         QualityIndicatorsInfo updateInfo = this.indicatorsInfoRepo.findById(projectId)
                 .orElseGet(QualityIndicatorsInfo::new);

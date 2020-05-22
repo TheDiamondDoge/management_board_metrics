@@ -16,4 +16,5 @@ public interface BacklogRepository extends CrudRepository<Backlog, BacklogPK> {
 
     @Query(nativeQuery = true, value = backlogKpiQuery)
     Optional<List<Backlog>> getBacklogKpiIssues(int projectId);
+    Optional<List<Backlog>> findByProjectId(int projectId);
 }

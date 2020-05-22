@@ -15,5 +15,5 @@ public interface QualityRepository extends CrudRepository<Quality, Integer> {
 
     @Query(nativeQuery = true, value = qualityKpiQuery)
     Optional<List<Quality>> getQualityKpiIssues(int projectId);
-
+    Optional<List<Quality>> findAllByProjectId(int projectId);
 }
